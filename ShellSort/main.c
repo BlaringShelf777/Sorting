@@ -3,6 +3,8 @@
 #include <time.h>
 #include <math.h>
 
+#define SEG 4
+#define ARGS 2
 
 int *makeArray(int size);
 void printArray(int array[], int size);
@@ -10,14 +12,18 @@ void shellSort(int array[], int size, int segments);
 void shellSortMain(int array[], int size, int h);
 
 
-int main(){
-    int *array = makeArray(100);
+int main(int argc, char *argv[]){
+    if (argc != ARGS){
+        printf("\n> ERROR! usage: <main_file> <array_size>\n\n");
+        return 1;
+    }
 
-    printf("\n*********\n");
-    printArray(array, 100);
-    printf("\n*********\n");
-    shellSort(array, 100, 4);
-    printf("\n\n");
+    int size = atoi(argv[argc-1]), *array = makeArray(size);
+    printf("\n----------INPUT ARRAY------------\n");
+    printArray(array, size);
+    printf("\n-------------SORTED--------------\n");
+    shellSort(array, size, SEG);
+    printArray(array, size);
 
     return 0;
 }
@@ -38,14 +44,12 @@ int *makeArray(int size){
 void printArray(int array[], int size){
     for (int i = 0; i < size; i++)
         printf(" %d", array[i]);
+    printf("\n");
 }
 
 void shellSort(int array[], int size, int segments){
-    for (int i = 1; i <= segments; i++){
+    for (int i = 1; i <= segments; i++)
         shellSortMain(array, size, (pow(3, segments + 1 - i) - 1) / 2);
-        printArray(array, size);
-        printf("\n--\n");
-    }
 }
 
 void shellSortMain(int array[], int size, int h){
@@ -58,4 +62,4 @@ void shellSortMain(int array[], int size, int h){
         }
         array[j + h] = aux;
     }
-}
+}   
