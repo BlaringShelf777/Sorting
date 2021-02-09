@@ -3,14 +3,11 @@
 #include <time.h>
 #include <math.h>
 
-#define SEG 4
 #define ARGS 2
 
 int *makeArray(int size);
 void printArray(int array[], int size);
-void shellSort(int array[], int size, int segments);
-void shellSortMain(int array[], int size, int h);
-
+void shellSort(int array[], int size);
 
 int main(int argc, char *argv[]){
     if (argc != ARGS){
@@ -22,8 +19,8 @@ int main(int argc, char *argv[]){
     printf("\n----------INPUT ARRAY------------\n");
     printArray(array, size);
     printf("\n-------------SORTED--------------\n");
-    shellSort(array, size, SEG);
-    printArray(array, size);
+    shellSort(array, size);
+    printf("\n");
 
     return 0;
 }
@@ -47,19 +44,23 @@ void printArray(int array[], int size){
     printf("\n");
 }
 
-void shellSort(int array[], int size, int segments){
-    for (int i = 1; i <= segments; i++)
-        shellSortMain(array, size, (pow(3, segments + 1 - i) - 1) / 2);
-}
+void shellSort(int array[], int size){
+    int segment = 0, pot = 1;
 
-void shellSortMain(int array[], int size, int h){
-    for (int i = h; i < size; i += h){
-        int j = i - h, aux = array[i];
+    while((int) floor(size / pow(2, pot))){
+        segment = (int) floor(size / pow(2, pot++));
+        for (int i = 0; i < size; i++)
+            for (int j = segment + i; j < size; j += segment){
+                int k = j - segment, aux = array[j];
 
-        while (j >= 0 && aux < array[j]){
-            array[j + h] = array[j];
-            j -= h;
-        }
-        array[j + h] = aux;
+                while (k >= 0 && aux < array[k]){
+                    array[k + segment] = array[k];
+                    k -= segment;
+                }
+                array[k + segment] = aux;
+            }
+        printf("After increments of size %d the list is: ", segment);
+        printArray(array, size);
     }
-}   
+}  
+  
