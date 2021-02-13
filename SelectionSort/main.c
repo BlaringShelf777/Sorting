@@ -10,8 +10,6 @@ int *makeArray(int size);
 void printArray(int array[], int size);
 void selectionSort(int array[], int size);
 
-
-
 int main(){
     int *array = makeArray(10);
 
