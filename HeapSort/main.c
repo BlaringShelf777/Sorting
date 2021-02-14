@@ -5,24 +5,34 @@
 
 #define MIN 1
 #define MAX 1
-#define SIZE 7
+#define SIZE 100
 
 // HeapSort
 void buildHeap(int array[], int size);
 void heapify(int array[], int size, int index);
+void heapSort(int array[], int size);
 // Array
 int *makeArray(int size);
-void printHeap(int array[], int size);
+void printArray(int array[], int size);
 
 int main(){
     int *array = makeArray(SIZE);
 
-    printHeap(array, SIZE);
-    buildHeap(array, SIZE);
-    printf("\n\n");
-    printHeap(array, SIZE);
+    printArray(array, SIZE);
+    heapSort(array, SIZE);  
+    printArray(array, SIZE);
 
     return 0;
+}
+
+void heapSort(int array[], int size){
+    buildHeap(array, size);
+    for (int i = 0, heapSize = size - 1; i < size; i++){
+        int aux = array[0];
+
+        array[0] = array[heapSize]; array[heapSize] = aux;
+        heapify(array, --heapSize, 0);
+    }
 }
 
 // Creates a Heap
@@ -63,22 +73,10 @@ int *makeArray(int size){
     return array;
 }
 
-// Prints the Heap
-void printHeap(int array[], int size){
-    for (int i = 0; i < size; i++){
+// Prints the Array
+void printArray(int array[], int size){
+    for (int i = 0; i < size; i++)
         printf("%d ", array[i]);
-        switch (i + 1){
-            case 1:
-            case 3:
-            case 7:
-            case 15:
-                printf("\n");
-            break;
-        
-            default:
-            break;
-        }
-    }
     printf("\n");
 }
 
