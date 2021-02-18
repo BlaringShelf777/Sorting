@@ -1,25 +1,28 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-#define SIZE 11
+#define SIZE 20
 
 void mergeSort(int *array, int *aux, int start, int end);
 void merge(int *array, int *aux, int start, int end);
 
 int main(){
-    int array[] = {10, 8, 22, 2, 11, 10, 1, 0, 100, 1, 13};
+    int *array = NULL;
     int *aux = NULL;
 
-    aux = (int *) malloc(sizeof(int) * SIZE);
-    for (int i = 0; i < SIZE; i++)
-        aux[i] = array[i];
+    array = (int *) malloc(sizeof(int) * SIZE); aux = (int *) malloc(sizeof(int) * SIZE);
+    srand(time(NULL));
+    for (int i = 0; i < SIZE; i++){
+        aux[i] = array[i] = rand() % 101;
+    }
     mergeSort(array, aux, 0, SIZE - 1);
-    free(aux);
     printf("\n\n");
     for (int i = 0; i < SIZE; i++)
         printf("%d ", array[i]);
     printf("\n\n");
+    free(aux); free(array);
 
     return 0;
 }
