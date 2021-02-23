@@ -10,6 +10,7 @@
 // QuickSort
 void quickSort(int *array, int start, int end);
 int partition(int *array, int start, int end);
+int randomizePivot(int *array, int start, int end);
 // Random Array
 int *makeArray(int size);
 void printArray(int array[], int size);
@@ -37,7 +38,7 @@ void quickSort(int *array, int start, int end){
 
 // Partition using the Hoare Method
 int partition(int *array, int start, int end){
-    int pivotVal = array[start];
+    int pivotVal = randomizePivot(array, start, end);
     int i = start, j = end, left = 1;
 
     while (i != j){
@@ -60,6 +61,19 @@ int partition(int *array, int start, int end){
     array[j] = pivotVal;
 
     return j;
+}
+
+// Randomizes the pivot
+int randomizePivot(int *array, int start, int end){
+    srand(time(NULL));
+
+    int index = start + (rand() % (end - start + 1));
+    int pivotVal = array[start];
+
+    array[start] = array[index];
+    array[index] = pivotVal;
+
+    return array[start];    
 }
 
 // Creates an Array
