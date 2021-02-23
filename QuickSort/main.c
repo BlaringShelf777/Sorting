@@ -41,17 +41,20 @@ int partition(int *array, int start, int end){
     int i = start, j = end, left = 1;
 
     while (i != j){
-        if (array[j] > pivotVal && left)
-            j--;
-        else if (array[j] <= pivotVal && left){
-            left = 0;
-            array[i++] = array[j];
-        }
-        else if(array[i] <= pivotVal)
-            i++;
-        else{
-            left = 1;
-            array[j--] = array[i];
+        if (left){
+            if (array[j] > pivotVal)
+                j--;
+            else{
+                left = 0;
+                array[i++] = array[j];
+            }
+        }else{
+            if(array[i] <= pivotVal)
+                i++;
+            else{
+                left = 1;
+                array[j--] = array[i];
+            }
         }
     }
     array[j] = pivotVal;
